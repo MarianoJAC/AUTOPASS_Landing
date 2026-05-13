@@ -4,51 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AUTOPASS - Estacionamiento Inteligente</title>
+
+    <!-- Fuentes y Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/landing.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
-<body class="bg-blur">
+<body>
+
     <header>
-        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-            <i class="fas fa-bars"></i>
-        </button>
-        <a href="index.html" class="header-logo-link">
+        <a href="/" class="header-logo-link">
             <img src="images/logo.png" alt="Logo" class="header-logo-img">
             <div class="logo-text">AUTOPASS</div>
         </a>
-        <nav id="nav-menu">
-            <a href="index.html">Inicio</a>
-            <a href="nuestra-red.html">Servicios</a>
-            
-            <a href="contacto.html">Contacto</a>
+        <nav id="main-nav">
+            <a href="#contacto">Contacto</a>
+            <a href="javascript:void(0)" onclick="openEnConstruccion()">Iniciá Sesión</a>
+            <a href="javascript:void(0)" onclick="openEnConstruccion()">Creá tu Cuenta</a>
         </nav>
     </header>
+
+    <!-- SECCION CARRUSEL + HERO OVERLAY -->
     <section class="seccion-carrusel">
         <div id="contenedorCarrusel" class="contenedor-carrusel"></div>
-    </section>
+        <button class="flecha-carrusel flecha-izq" onclick="MoverCarrusel(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="flecha-carrusel flecha-der" onclick="MoverCarrusel(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
 
-    <div class="seccion-frase-destacada">
-        <div class="frase-parpadeante">AUTOPASS estacionamiento inteligente</div>
-        <p class="descripcion-frase">AUTOPASS simplifica estacionar: detecta espacios libres, permite reservar online, abre barreras con solo ver tu patente y gestiona pagos digitales, reduciendo demoras, estres y mejorando la experiencia urbana.</p>
-    </div>
-
-    <section class="hero">
-        <h1>AUTOPASS</h1>
-        <p>La evolucion del estacionamiento. Acceso inteligente, pagos digitales y control total desde cualquier dispositivo.</p>
-        <div class="cta-group">
-            <a href="nuestra-red.html" class="btn btn-primary">RESERVA YA</a>
-            <a href="nuestra-red.html" class="btn btn-outline">Conoce Mas</a>
+        <div class="hero-overlay">
+            <h1>AUTOPASS</h1>
+            <div id="leyendaHero" class="leyenda-hero"></div>
+            <div class="cta-group">
+                <a href="#contacto" class="btn btn-primary">RESERVÁ YA</a>
+                <a href="javascript:void(0)" onclick="openEnConstruccion()" class="btn btn-outline">Conocé Más</a>
+            </div>
         </div>
     </section>
 
+    <!-- SECCION FEATURES -->
     <section class="features" id="features">
         <div class="feature-card">
             <span class="feature-icon"><i class="fas fa-calendar-check"></i></span>
             <h3>Reservas Anticipadas</h3>
-            <p>Planifica tu llegada y garantiza tu plaza en segundos.</p>
+            <p>Planificá tu llegada y garantizá tu plaza en segundos.</p>
         </div>
         <div class="feature-card">
             <span class="feature-icon"><i class="fas fa-camera-retro"></i></span>
@@ -58,87 +66,77 @@
         <div class="feature-card">
             <span class="feature-icon"><i class="fas fa-microchip"></i></span>
             <h3>Control Total</h3>
-            <p>Administra tus reservas, vehiculos y pagos a traves de tu panel personalizado en tiempo real.</p>
+            <p>Administrá tus reservas, vehículos y pagos a través de tu panel personalizado en tiempo real.</p>
         </div>
         <div class="feature-card">
             <span class="feature-icon"><i class="fas fa-credit-card"></i></span>
-            <h3>Paga online</h3>
-            <p>Integracion con Mercado Pago para cobros agiles y seguros. Gestiona tu estadia de forma remota.</p>
+            <h3>Pagá online</h3>
+            <p>Integración con Mercado Pago para cobros ágiles y seguros. Gestioná tu estadía de forma remota.</p>
         </div>
     </section>
 
+    <!-- SECCION MAPA -->
     <section class="map-section" id="donde-estamos">
-        <h2>Encontra los mejores puntos</h2>
-        <p>Encontra el punto AUTOPASS mas cercano a tu ubicacion.</p>
+        <h2 class="section-title">ENCONTRÁ EL PUNTO AUTOPASS MÁS CERCANO</h2>
         <div class="map-container">
             <div id="map"></div>
             <div class="map-overlay">
-                <h4><i class="fas fa-building"></i> Playa</h4>
+                <h4><i class="fas fa-building"></i> Playa Central</h4>
                 <p>Av. del Libertador 1200, CABA</p>
             </div>
         </div>
     </section>
 
-    <footer class="main-footer">
-        <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo">
-                        <img src="images/logo.png" alt="AutoPass" class="footer-logo-img">
-                        <span>AUTOPASS</span>
-                    </div>
-                    <p class="footer-desc">Lideres en tecnologia de estacionamiento inteligente. Innovacion, seguridad y confort para tu movilidad diaria.</p>
-                    <div class="footer-social">
-                        <a href="https://www.instagram.com/autopass.ar" class="social-link" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.facebook.com/autopass.ar" class="social-link" title="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://x.com/autopass_ar" class="social-link" title="X (Twitter)" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
-                    </div>
+    <footer class="main-footer" id="contacto">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="images/logo.png" alt="Logo">
+                    <span class="footer-logo-text">AUTOPASS</span>
                 </div>
-                <div class="footer-col">
-                    <h4>Navegacion</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Inicio</a></li>
-                        <li><a href="nuestra-red.html">Servicios</a></li>
-                        <li><a href="contacto.html">Contacto</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Legal</h4>
-                    <ul class="footer-links">
-                        <li><a href="terminos.html">Terminos y Condiciones</a></li>
-                        <li><a href="privacidad.html">Politicas de Privacidad</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Soporte</h4>
-                    <ul class="footer-links">
-                        <li><a href="contacto.html">Centro de Soporte</a></li>
-                        <li><i class="fas fa-phone"></i> 0810-333-PASS</li>
-                        <li><i class="fas fa-envelope"></i> info@autopass.com.ar</li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Descarga nuestras apps</h4>
-                    <div class="app-badges">
-                        <a href="#" class="app-btn">
-                            <i class="fab fa-google-play"></i>
-                            <span>Google Play</span>
-                        </a>
-                        <a href="#" class="app-btn">
-                            <i class="fab fa-apple"></i>
-                            <span>App Store</span>
-                        </a>
-                    </div>
+                <p class="footer-description">Líderes en tecnología de estacionamiento inteligente en Argentina. Innovación, seguridad y confort para tu movilidad diaria.</p>
+                <div class="social-links">
+                    <a href="javascript:void(0)" onclick="openEnConstruccion()" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="javascript:void(0)" onclick="openEnConstruccion()" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="javascript:void(0)" onclick="openEnConstruccion()" class="social-link"><i class="fab fa-x-twitter"></i></a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 <b>AUTOPASS</b> TECHNOLOGY. Todos los derechos reservados.</p>
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <a href="javascript:void(0)" onclick="openEnConstruccion()">Inicio</a>
+                <a href="#features">Servicios</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="javascript:void(0)" onclick="openEnConstruccion()">Términos y Condiciones</a>
+                <a href="javascript:void(0)" onclick="openEnConstruccion()">Políticas de Privacidad</a>
+                <a href="javascript:void(0)" onclick="openEnConstruccion()">Soporte</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p><i class="fas fa-location-dot contact-icon"></i> Av. del Libertador 1200, CABA</p>
+                <p><i class="fas fa-envelope contact-icon"></i> info@autopass.com.ar</p>
+                <p><i class="fas fa-phone contact-icon"></i> 0810-333-PASS</p>
             </div>
         </div>
+        <div class="footer-bottom">
+            &copy; 2026 <span>AUTOPASS</span> TECHNOLOGY. Todos los derechos reservados.
+        </div>
     </footer>
-    <div id="toast-container"></div>
+
+    <!-- MODAL EN CONSTRUCCIÓN -->
+    <div id="modalConst" class="modal-const">
+        <div class="modal-const-content">
+            <span class="modal-const-close" onclick="closeEnConstruccion()">&times;</span>
+            <i class="fas fa-hard-hat modal-const-icon"></i>
+            <h3>PÁGINA EN CONSTRUCCIÓN</h3>
+            <p>Estamos trabajando para brindarte la mejor experiencia. ¡Pronto estará disponible!</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/landing.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
